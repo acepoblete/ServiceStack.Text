@@ -73,7 +73,10 @@ namespace ServiceStack.Text.Common
                 return DateTime.Parse(dateTimeStr, CultureInfo.InvariantCulture).Prepare();
             }
 
-            if (dateTimeStr.Length == XsdDateTimeFormatSeconds.Length)
+            if (dateTimeStr.Length == XsdDateTimeFormatSeconds.Length && !dateTimeStr.EndsWith("M"))
+                return DateTime.ParseExact(dateTimeStr, XsdDateTimeFormatSeconds, null, DateTimeStyles.AdjustToUniversal).Prepare(parsedAsUtc: true);
+
+            if (dateTimeStr.Length == XsdDateTimeFormatSeconds.Length && !dateTimeStr.EndsWith("M"))
                 return DateTime.ParseExact(dateTimeStr, XsdDateTimeFormatSeconds, null, DateTimeStyles.AdjustToUniversal).Prepare(parsedAsUtc:true); 
 
             if (dateTimeStr.Length >= XsdDateTimeFormat3F.Length
